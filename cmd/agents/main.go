@@ -21,7 +21,6 @@ func main() {
 }
 
 func initConfig(parentCtx context.Context) context.Context {
-	// configure suggared logging using zap
 	appConfig := config.LoadConfig(parentCtx)
 	appSetup = setup{config: appConfig}
 
