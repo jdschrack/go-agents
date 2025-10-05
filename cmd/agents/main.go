@@ -45,5 +45,7 @@ func initConfig(parentCtx context.Context) context.Context {
 		logger.Err(err).Msg("could not connect to database")
 	}
 
+	appSetup.db = db
+
 	return data.WithDatabase(ctx, db)
 }
