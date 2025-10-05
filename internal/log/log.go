@@ -44,7 +44,7 @@ func LogLevel() zerolog.Level {
 	}
 }
 
-func NewLogger(appName, appVersion string) (*zerolog.Logger, *zerolog.Logger) {
+func NewLogger(appName, appVersion string) (*zerolog.Logger, error) {
 	// Use console writer for human-readable output
 	output := zerolog.ConsoleWriter{Out: os.Stderr}
 

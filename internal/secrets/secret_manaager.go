@@ -2,28 +2,28 @@ package secrets
 
 import (
 	"context"
-	"fmt"
 
 	sm "cloud.google.com/go/secretmanager/apiv1"
 	"cloud.google.com/go/secretmanager/apiv1/secretmanagerpb"
+
+	"github.com/jdschrack/go-agents/internal/log"
 )
 
-type SecretManager struct {
-	ProjectId string
-}
-
-func (s *SecretManager) GetSecret(ctx context.Context, key string) (string, error) {
-
+func GetSecret(ctx context.Context, path string) (string, error) {
 	c, err := sm.NewClient(ctx)
 	if err != nil {
 		return "", err
 	}
 
-	defer c.Close()
+	defer func() {
+		if err := c.Close(); err != nil {
+			logger := log.FromContext(ctx)
+			logger.Err(err).Msg("failed to close secret manager client")
+		}
+	}()
 
-	name := fmt.Sprintf("projects/%s/secrets/%s/versions/latest", s.ProjectId, key)
 	req := &secretmanagerpb.AccessSecretVersionRequest{
-		Name: name,
+		Name: path,
 	}
 	result, err := c.AccessSecretVersion(ctx, req)
 
