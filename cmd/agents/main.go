@@ -43,6 +43,7 @@ func initConfig(parentCtx context.Context) context.Context {
 	db, err := data.GetConnection(ctx, appConfig.DatabasePath, false)
 	if err != nil {
 		logger.Err(err).Msg("could not connect to database")
+		panic(err)
 	}
 
 	appSetup.db = db
