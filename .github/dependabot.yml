@@ -1,0 +1,18 @@
+version: 2
+updates:
+  # Configuration for updating Go module dependencies (go.mod)
+  - package-ecosystem: "gomod"
+    directory: "/" # Location of the go.mod file, typically the root
+    schedule:
+      interval: "weekly" # How often to check for updates (daily, weekly, monthly)
+    
+    # Optional: Increase the limit of open pull requests for Go modules
+    # You might need this if your project has many dependencies
+    open-pull-requests-limit: 10
+    
+    # Optional: Group minor and patch updates for less noise
+    groups:
+      go-minor-patch:
+        update-types:
+          - "minor"
+          - "patch"
